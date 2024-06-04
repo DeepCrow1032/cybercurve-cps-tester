@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberCurve CPS Hub</title>
+    <style>
+        body {
+            background-color: #000;
+            color: cyan;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 3em;
+            font-weight: normal;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.5em;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        #cpsTester {
+            width: 300px;
+            height: 300px;
+            background-color: #000;
+            color: cyan;
+            font-size: 2em;
+            border: 2px solid cyan;
+            margin: 0 auto;
+            cursor: pointer;
+            position: relative;
+        }
+        .mark {
+            width: 10px;
+            height: 10px;
+            background-color: cyan;
+            border-radius: 50%;
+            position: absolute;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>CyberCurve CPS Hub</h1>
+    <p>Welcome to the CyberCurve CPS Hub! Test your CPS (Clicks Per Second) and see how accurate your clicks are in this futuristic hub.</p>
+    <div id="cpsTester" onclick="startTimer()">
+        <div class="mark"></div>
+    </div>
+    <div id="cpsCounter"></div>
+
+    <script>
+        let clicks = 0;
+        let timer;
+
+        function startTimer() {
+            clicks++;
+            let x = event.clientX - event.target.getBoundingClientRect().left;
+            let y = event.clientY - event.target.getBoundingClientRect().top;
+            let mark = document.createElement('div');
+            mark.className = 'mark';
+            mark.style.left = x + 'px';
+            mark.style.top = y + 'px';
+            document.getElementById('cpsTester').appendChild(mark);
+            mark.style.display = 'block';
+            
+            if (clicks === 1) {
+                timer = setInterval(updateCounter, 100);
+            }
+            if (clicks >= 300) {
+                clearInterval(timer);
+            }
+        }
+
+        function updateCounter() {
+            let cps = (clicks / 30).toFixed(2);
+            document.getElementById('cpsCounter').textContent = cps + ' CPS';
+        }
+    </script>
+</body>
+</html>
